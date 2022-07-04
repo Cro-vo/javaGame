@@ -13,8 +13,8 @@ import javax.swing.JPanel;
  *
  */
 public class GameJFrame extends JFrame {
-	public static int GameX = 1200;
-	public static int GameY = 800;
+	public static int GameX = 778;
+	public static int GameY = 627;
 	
 	private JPanel jPanel = null;// 面板
 	private KeyListener keyListener = null; // 键盘监听

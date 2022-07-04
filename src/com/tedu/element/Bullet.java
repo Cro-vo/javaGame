@@ -47,7 +47,7 @@ public class Bullet extends ElementObj {
 
     @Override
     public ElementObj createElement(String str) {
-
+        // str: x,y,forward
         String[] split = str.split(","); // x:1
         for (String str1 : split) {
             String[] split1 = str1.split(":");
@@ -57,15 +57,15 @@ public class Bullet extends ElementObj {
                 case "forward":this.forward = split1[1];break;
             }
         }
-        this.setH(8);
-        this.setW(8);
+        this.setH(6);
+        this.setW(6);
 
         // 修正子弹射出的位置
         switch (this.forward) {
-            case "left":this.setY(this.getY()+14);this.setX(this.getX()-10);break;
-            case "right":this.setY(this.getY()+14);this.setX(this.getX()+33);break;
-            case "up":this.setX(this.getX()+12);this.setY(this.getY()-10);break;
-            case "down":this.setY(this.getY()+33);this.setX(this.getX()+12);break;
+            case "left":this.setY(this.getY()+14);this.setX(this.getX()-7);break;
+            case "right":this.setY(this.getY()+14);this.setX(this.getX()+35);break;
+            case "up":this.setX(this.getX()+14);this.setY(this.getY()-7);break;
+            case "down":this.setY(this.getY()+35);this.setX(this.getX()+14);break;
         }
 
         return this;

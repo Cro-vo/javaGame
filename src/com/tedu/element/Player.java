@@ -22,9 +22,22 @@ public class Player extends ElementObj {
     // 开火状态
     private boolean pkType = false;
 
-
+    public Player(){}
     public Player(int x, int y, int w, int h, ImageIcon icon) {
         super(x, y, w, h, icon);
+
+    }
+
+    @Override
+    public ElementObj createElement(String str) {
+        String[] split = str.split(",");
+        this.setX(Integer.parseInt(split[0]));
+        this.setY(Integer.parseInt(split[1]));
+        ImageIcon icon = GameLoader.imgMap.get(split[2]);
+        this.setIcon(icon);
+        this.setW(icon.getIconWidth());
+        this.setH(icon.getIconHeight());
+        return this;
 
     }
 
@@ -36,10 +49,10 @@ public class Player extends ElementObj {
         if (up == true && this.getY()>0) {
             this.setY(this.getY() - 5);
         }
-        if (right == true && this.getX()<GameJFrame.GameX - this.getW()) {
+        if (right == true && this.getX()<GameJFrame.GameX - 53) {
             this.setX(this.getX() + 5);
         }
-        if (down == true && this.getY()<GameJFrame.GameY - this.getH()) {
+        if (down == true && this.getY()<GameJFrame.GameY - 83) {
             this.setY(this.getY() + 5);
         }
     }

@@ -41,9 +41,11 @@ public class GameThread extends Thread {
      * 游戏开始前
      */
     private void gameLoad() {
-        load();
-        GameLoader.mapLoad(5);
-        GameLoader.loadImg();
+//        load();
+        GameLoader.mapLoad(5);// 加载地图
+        GameLoader.loadImg();// 加载图片
+        GameLoader.loadPlayer();// 加载玩家
+
     }
 
     /**
@@ -118,6 +120,7 @@ public class GameThread extends Thread {
 
 
 
+    // 测试用
     public void load(){
 
         ImageIcon icon = new ImageIcon("image/tank/play1/player1_up.png");

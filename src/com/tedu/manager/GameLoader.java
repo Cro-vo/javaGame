@@ -1,8 +1,10 @@
 package com.tedu.manager;
 
 import com.tedu.controller.GameThread;
+import com.tedu.element.ElementObj;
 import com.tedu.element.GameElement;
 import com.tedu.element.MapObj;
+import com.tedu.element.Player;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -50,6 +52,7 @@ public class GameLoader {
 
     }
 
+    // 加载硬盘的图片资源
     public static void loadImg(){
         String texturl = "com/tedu/text/GameData.pro";
         InputStream inputStream = GameLoader.class.getClassLoader().getResourceAsStream(texturl);
@@ -68,6 +71,14 @@ public class GameLoader {
             e.printStackTrace();
         }
 
+
+    }
+
+    // 将玩家添加到元素管理器中
+    public static void loadPlayer(){
+        String playerInfo = "500,500,up";
+        ElementObj player = new Player().createElement(playerInfo);
+        EM.addElement(player, GameElement.PLAYER);
 
     }
 
