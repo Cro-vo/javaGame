@@ -2,6 +2,7 @@ package com.tedu.controller;
 
 import com.tedu.element.*;
 import com.tedu.manager.ElementManager;
+import com.tedu.manager.GameLoader;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -16,7 +17,6 @@ import java.util.Properties;
 
 public class GameThread extends Thread {
     private ElementManager EM = ElementManager.getManager();
-    private static Properties pro = new Properties();
 
     @Override
     public void run() {
@@ -42,7 +42,8 @@ public class GameThread extends Thread {
      */
     private void gameLoad() {
         load();
-        mapLoad(5);
+        GameLoader.mapLoad(5);
+        GameLoader.loadImg();
     }
 
     /**
@@ -57,7 +58,8 @@ public class GameThread extends Thread {
 
             moveAndUpdate(gameTime);
 
-            elementCollision();
+            elementCollision(GameElement.ENEMY, GameElement.BULLET);
+            elementCollision(GameElement.MAP, GameElement.BULLET);
 
             gameTime++;
             try {
@@ -68,18 +70,18 @@ public class GameThread extends Thread {
         }
     }
 
-    private void elementCollision() {
-        List<ElementObj> enemys = EM.getElementsByKey(GameElement.ENEMY);
-        List<ElementObj> bullets = EM.getElementsByKey(GameElement.BULLET);
-        for (int i = 0;i < enemys.size(); i++){
-            ElementObj enemy = enemys.get(i);
+    private void elementCollision(GameElement ge1, GameElement ge2) {
+        List<ElementObj> ListA = EM.getElementsByKey(ge1);
+        List<ElementObj> ListB = EM.getElementsByKey(ge2);
+        for (int i = 0;i < ListA.size(); i++){
+            ElementObj element1 = ListA.get(i);
 
-            for (int j = 0; j < bullets.size(); j++){
-                ElementObj bullet = bullets.get(j);
+            for (int j = 0; j < ListB.size(); j++){
+                ElementObj element2 = ListB.get(j);
 
-                if (enemy.collision(bullet)){
-                    enemy.setAlive(false);
-                    bullet.setAlive(false);
+                if (element1.collision(element2)){
+                    element1.setAlive(false);
+                    element2.setAlive(false);
                     break;
                 }
             }
@@ -113,34 +115,7 @@ public class GameThread extends Thread {
     private void gameOver() {
     }
 
-    // 地图加载
-    public void mapLoad(int mapID){
-        String mapName = "com/tedu/text/" + mapID + ".map";
-        InputStream inputStream = GameThread.class.getClassLoader().getResourceAsStream(mapName);
-//        System.out.println(inputStream);
-        if (inputStream == null){
-            System.out.println("地图读取异常");
-            return;
-        }
 
-        try {
-            pro.load(inputStream);
-            Enumeration<?> names = pro.propertyNames();
-            while (names.hasMoreElements()) {
-                String key = (String) names.nextElement();
-//                System.out.println(pro.getProperty(key));
-                String[] arrs = pro.getProperty(key).split(";");
-                for (int i = 0; i < arrs.length; i++) {
-                    EM.addElement(new MapObj().createElement(key + "," + arrs[i]), GameElement.MAP);
-                }
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
     public void load(){

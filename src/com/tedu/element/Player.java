@@ -1,6 +1,7 @@
 package com.tedu.element;
 
 import com.tedu.manager.ElementManager;
+import com.tedu.manager.GameLoader;
 import com.tedu.show.GameJFrame;
 import com.tedu.show.GameMainJPanel;
 
@@ -16,9 +17,6 @@ public class Player extends ElementObj {
     private boolean right = false;
     private boolean up = false;
 
-    // 图片集合， 可使用枚举类型扩展
-    private Map<String, ImageIcon> imgMap = null;
-
     // 朝向
     private String forward = "up";
     // 开火状态
@@ -28,27 +26,21 @@ public class Player extends ElementObj {
     public Player(int x, int y, int w, int h, ImageIcon icon) {
         super(x, y, w, h, icon);
 
-        imgMap = new HashMap<>();
-        imgMap.put("left", new ImageIcon("image/tank/play1/player1_left.png"));
-        imgMap.put("up", new ImageIcon("image/tank/play1/player1_up.png"));
-        imgMap.put("right", new ImageIcon("image/tank/play1/player1_right.png"));
-        imgMap.put("down", new ImageIcon("image/tank/play1/player1_down.png"));
-
     }
 
     @Override
     public void move() {
         if (left == true && this.getX()>0) {
-            this.setX(this.getX() - 10);
+            this.setX(this.getX() - 5);
         }
         if (up == true && this.getY()>0) {
-            this.setY(this.getY() - 10);
+            this.setY(this.getY() - 5);
         }
         if (right == true && this.getX()<GameJFrame.GameX - this.getW()) {
-            this.setX(this.getX() + 10);
+            this.setX(this.getX() + 5);
         }
         if (down == true && this.getY()<GameJFrame.GameY - this.getH()) {
-            this.setY(this.getY() + 10);
+            this.setY(this.getY() + 5);
         }
     }
 
@@ -134,7 +126,7 @@ public class Player extends ElementObj {
 
     @Override
     protected void updateImage() {
-        this.setIcon(imgMap.get(forward));
+        this.setIcon(GameLoader.imgMap.get(forward));
     }
 
     @Override
